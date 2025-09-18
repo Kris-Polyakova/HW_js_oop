@@ -1,4 +1,11 @@
-import { Bowerman, Character, Daemon, Magician, Swordsman, Undead, Zombie, } from "../classes";
+import { Bowerman } from "../class/Bowerman";
+import { Character } from "../class/Character";
+import { Daemon } from "../class/Daemon";
+import { Magician } from "../class/Magician";
+import { Swordsman } from "../class/Swordsman";
+import { Undead } from "../class/Undead";
+import { Zombie } from "../class/Zombie";
+
 
 test('should set valid name between 2 and 10 characters', () => {
     const validNames = ['Jo', 'John', 'Jonathan'];
@@ -58,7 +65,7 @@ test.each([
   });
 
 test('levelUp when health > 0', () => {
-  const testUnit = new Character('Test', 'Bowman', 1, 1, 1, 1);
+  const testUnit = new Character('Test', 'Bowman');
   const oldUnitLevel = testUnit.level;
   testUnit.levelUp();
 
@@ -66,22 +73,24 @@ test('levelUp when health > 0', () => {
 });
 
 test('levelUp when health = 0', () => {
-  const testUnit = new Character('Test', 'Bowman', 0, 1, 1, 1);
+  const testUnit = new Character('Test', 'Bowman');
   const oldUnitLevel = testUnit.level;
+  testUnit.health = 0;
   testUnit.levelUp();
 
   expect(testUnit.level).toBe(oldUnitLevel);
 });
 
 test('damage when health > 0', () => {
-  const testUnit = new Character('Test', 'Bowman', 100, 1, 1, 30);
-  testUnit.damage(50);
+  const testUnit = new Bowerman('Test', 'Bowman');
+  testUnit.damage(20);
 
-  expect(testUnit.health).toBe(65);
+  expect(testUnit.health).toBe(85);
 });
 
 test('damage when health = 0', () => {
-  const testUnit = new Character('Test', 'Bowman', 0, 1, 1, 30);
+  const testUnit = new Bowerman('Test', 'Bowman');
+  testUnit.health = 0;
   testUnit.damage(50);
 
   expect(testUnit.health).toBe(0);
@@ -89,6 +98,6 @@ test('damage when health = 0', () => {
 
 test('should return type', () => {
   const type = 'Bowman';
-  const testUnit = new Character('Test', type, 0, 1, 1, 30);
+  const testUnit = new Character('Test', type);
   expect(testUnit.type).toBe(type);
 });
